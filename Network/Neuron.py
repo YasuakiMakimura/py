@@ -3,84 +3,93 @@ import matplotlib.pyplot as plt
 
 
 class Neuron:
-    def __init__(self, fw_wscale=None, rec_wscale=None, fb_wscale=None
-                 ,*, activation_func):
-        # self._output = None
-        # self._internal_state = 0
-        self._forward_w = fw_wscale
-        self._recurrent_w = rec_wscale
-        self._feedback_w = fb_wscale
-        self._forward_input = None
-        self._recurrent_input = None
-        self._feedback_input = None
-        self._bias = None
-        self._gain = None
-        self.activation_func = activation_func
+    _w = None
+    _u = None
+    _o = None
+
+    def __init__(self, n_in, num):
+        self.n_in = n_in
+        self.w = np.zeros(n_in)
+        self.u = np.zeros(num)
+        self.o = np.zeros(num)
 
     @property
-    def gain(self):
-        return self._gain
+    def w(self):
+        return self._w
+
+    @w.setter
+    def w(self, w_array):
+        self._w = w_array
 
     @property
-    def bias(self):
-        return self._bias
+    def u(self):
+        return self._u
+
+    @u.setter
+    def u(self, u_array):
+        self._u = u_array
 
     @property
-    def forward_input(self):
-        return self._forward_input
+    def o(self):
+        return self._o
 
-    @property
-    def recurrent_input(self):
-        return self._recurrent_input
+    @o.setter
+    def o(self, o_array):
+        self._o = o_array
 
-    @property
-    def feedback_input(self):
-        return self._feedback_input
 
-    @property
-    def forward_weight(self):
-        return self._forward_w
+# class Layer:
+#     _w = None
+#     _u = None
+#     _o = None
+#
+#     def __init__(self, *neuron):
+#         self.n_in = n_in
+#         self.num_in = num
+#         self.w = np.zeros((n_in, num))
+#         self.u = np.zeros((num,))
+#         self.o = np.zeros((num,))
+#
+#     def __call__(self, input):
+#         return np.dot(self.w, input)
+#
+#     @property
+#     def w(self):
+#         return self._w
+#
+#     @w.setter
+#     def w(self, w_array):
+#         self._w = w_array
+#
+#     @property
+#     def u(self):
+#         return self._u
+#
+#     @u.setter
+#     def u(self, u_array):
+#         self._u = u_array
+#
+#     @property
+#     def o(self):
+#         return self._o
+#
+#     @o.setter
+#     def o(self, o_array):
+#         self._o = o_array
 
-    @property
-    def recurrent_weight(self):
-        return self._recurrent_w
 
-    @property
-    def feedback_weight(self):
-        return self._feedback_w
+class Network:
+    def __init__(self, **layer):
+        print(layer)
+        for l_name, l_inf in layer.items():
+            self.__dict__[l_name] = l_inf
+        print(self.__dict__)
 
-    @property
-    def internal_state(self):
-        internal_state = 0
-        if self.forward_weight is None:
-            internal_state = self.forward_weight.dot(self.forward_input)
-        if self.recurrent_weight is None:
-            internal_state += self.recurrent_weight.dot(self.recurrent_input)
-        if self.feedback_weight is None:
-            internal_state += self.feedback_weight.dot(self.feedback_input)
-        return internal_state
+    # def forward(self, *layer):
+    #     layer
 
-    @property
-    def output(self):
-        output = self.activation_func(self.internal_state, self.gain, self.bias)
-        return output
 
-    @gain.setter
-    def gain(self, gain):
-        self._gain = gain
-
-    @bias.setter
-    def bias(self, bias):
-        self._bias = bias
-
-    @forward_input.setter
-    def forward_input(self, input_array: np.ndarray):
-        self._forward_input = input_array
-
-    @recurrent_input.setter
-    def recurrent_input(self, input_array: np.ndarray):
-        self._recurrent_input = input_array
-
-    @feedback_input.setter
-    def feedback_input(self, input_array: np.array):
-        self._feedback_input = input_array
+if __name__ == "__main__":
+    net = Network(l1=Neuron(2, 3))
+    net.b = 0
+    print(net.b)
