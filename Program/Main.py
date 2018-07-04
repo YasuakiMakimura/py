@@ -297,13 +297,13 @@ def main2():
                 exp_x, exp_y = np.random.uniform(-1, 1, (2,))
             else:
                 raise Exception(f'Not expected error??????')
-            if para['learning_type'] in ['emphasized', 'conventional']:
-                task.move_agent(mlr_output[-1].data[0][1] + exp_x,
-                                mlr_output[-1].data[0][2] + exp_y)
-            elif para['learning_type'] == 'non-emphasized':
-                task.move_agent(mlr_output[-1].data[0][1], mlr_output[-1].data[0][2])
-            else:
-                raise Exception(f'Not expected error!!!!')
+            # if para['learning_type'] in ['emphasized', 'conventional']:
+            #     task.move_agent(mlr_output[-1].data[0][1] + exp_x,
+            #                     mlr_output[-1].data[0][2] + exp_y)
+            # elif para['learning_type'] == 'non-emphasized':
+            #     task.move_agent(mlr_output[-1].data[0][1], mlr_output[-1].data[0][2])
+            # else:
+            #     raise Exception(f'Not expected error!!!!')
             task.agent_crash_wall()
             reward, state = task.state_check()
             """DATASTORE"""
