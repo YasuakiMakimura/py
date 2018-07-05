@@ -31,19 +31,27 @@ class Reservoir:
         self.num: int = num
         self.num_out: int = num_out
         self.p_connect: int = p_connect
-        self.inf_con = xp.array(xp.random.choice(2, (num, num),
-                                                 p=[(100 - p_connect) / 100, p_connect / 100]))
+
         self.v_lambda: float = v_lambda
         self.v_tau: Tuple[float] = v_tau
         self.n_tau: Tuple[float] = n_tau
 
+        inf_con = xp.array(
+            xp.random.choice(2, (num, num_in), p=[(100 - p_connect) / 100, p_connect / 100]))
         self.in_w = xp.random.uniform(-in_wscale, in_wscale, (num, num_in))
-        self.rw = v_lambda * xp.random.normal(0,
-                                              1 / math.sqrt
-                                              (float(num * p_connect / 100)), (num, num))
-        self.rw *= self.inf_con
+        self.in_w *= inf_con
+
+        inf_con = xp.array(
+            xp.random.choice(2, (num, num), p=[(100 - p_connect) / 100, p_connect / 100]))
+        self.rw \
+            = v_lambda * xp.random.normal(0,
+                                          1 / math.sqrt(float(num * p_connect / 100)), (num, num))
+        self.rw *= inf_con
         self.read_w = xp.random.normal(0, 1 / math.sqrt(float(num)), (num_out, num))
+        inf_con = xp.array(
+            xp.random.choice(2, (num, num_out), p=[(100 - p_connect) / 100, p_connect / 100]))
         self.fb_w = xp.random.uniform(-fb_wscale, fb_wscale, (num, num_out))
+        self.fb_w *= inf_con
         self.ru = xp.random.uniform(-1.0, 1.0, num)
         self.old_ru: xp.ndarray
         self.bu_ru: xp.ndarray
