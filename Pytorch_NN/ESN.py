@@ -61,27 +61,13 @@ class ESN(nn.Module):
         y = F.tanh(u)
         return y
 
+    #####################################
+    # STATIC
+    #####################################
+
     # Generate W matrix
-    # def generate_w(self, w, sparsity, *size):
-    #     if sparsity is None:
-    #         if callable(w):
-    #             return w(size)
-    #         else:
-    #             # r = np.random.uniform(-1.0, 1.0, size)
-    #             # return torch.FloatTensor(r)
-    #             return torch.zeros(size)
-    #     else:
-    #         s_w = np.random.choice([0.0, 1.0], size, p=[1.0 - sparsity, sparsity])
-    #         s_w = torch.FloatTensor(s_w)
-    #
-    #         if callable(w):
-    #             s_w[s_w == 1] = w((len(s_w[s_w == 1]),))
-    #         else:
-    #             s_w[s_w == 1].uniform_(-1.0, 1.0, (len(s_w[s_w == 1]),))
-    #
-    #         return s_w
-    # Generate W matrix
-    def generate_w(self, w, sparsity, *size):
+    @staticmethod
+    def generate_w(w, sparsity, *size):
         if callable(w):
             if sparsity is None:
                 return w(size)
