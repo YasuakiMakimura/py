@@ -8,8 +8,10 @@ from Field import Field
 class Task:
     def __init__(self):
         field_size = 400
-        self.goal = Goal(field_size, c=(0, 0, 255), r=field_size * 0.2)
-        self.agent = Agent(field_size, c=(255, 0, 0), r=field_size * 0.1)
+        self.goal = Goal(field_size, c=(0, 0, 255), r=field_size * 0.2,
+                         p='random')
+        self.agent = Agent(field_size, c=(255, 0, 0), r=field_size * 0.1,
+                           p='random')
         self.field = Field(field_size)
 
     def reward_check(self, reward, wall_penalty):
@@ -35,8 +37,6 @@ if __name__ == "__main__":
     for epoch in range(1000):
         print(f'ep: {epoch}')
         task.goal.init_flag()
-        task.agent.p = 'random'
-        task.goal.p = 'random'
         task.field(100, task.agent, task.goal)
 
         p_log.append(task.agent.p)

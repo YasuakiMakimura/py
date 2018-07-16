@@ -13,21 +13,19 @@ def wrap(gain):
 def sigmoid(u: Union[list, tuple, np.ndarray], gain=1.0, bias=0.0, diff=False):
     gain = wrap(gain)
     for i, u_value in enumerate(u):
-        o = 1 / (1 + math.exp(-gain * (u_value + bias)))
+        o = 1 / (1 + math.exp(-gain * u_value))
         if diff:
             yield gain * o * (1 - o)
-        else:
-            yield o
+        yield o
 
 
 def tanh(u: Union[list, tuple, np.ndarray], gain=1.0, bias=0.0, diff=False):
     gain = wrap(gain)
     for i, u_value in enumerate(u):
         if diff:
-            yield gain / (math.cosh(gain * (u_value + bias)) ** 2)
-        else:
-            o = math.tanh(gain * u_value)
-            yield o
+            yield gain / (math.cosh(gain * u_value) ** 2)
+        o = math.tanh(gain * u_value)
+        yield o
 
 
 def relu(u: Union[list, tuple, np.ndarray], gain=1.0, bias=0.0, diff=False):
